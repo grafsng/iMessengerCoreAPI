@@ -8,6 +8,6 @@ namespace iMessengerCoreAPI.Services
 {
     public interface IRGDialogsService
     {
-        public List<Guid> FindDialog(List<Guid> li);
+        public Guid FindDialog(List<Guid> li);
     }
 }

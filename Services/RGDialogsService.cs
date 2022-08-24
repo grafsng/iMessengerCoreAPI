@@ -9,7 +9,7 @@ namespace iMessengerCoreAPI.Services
 {
     public class RGDialogsService : IRGDialogsService
     {
-        public List<Guid> FindDialog(List<Guid> li)
+        public Guid FindDialog(List<Guid> li)
         {
             RGDialogsClients dialogClients = new RGDialogsClients();
 
@@ -17,25 +17,27 @@ namespace iMessengerCoreAPI.Services
             var possibleDialogsList = RGDialogsClientsList.Select(x=>x.IDRGDialog).Distinct().ToList();
             var foundEntities = RGDialogsClientsList.Where(x => li.Contains(x.IDClient)).ToList();
 
-            var result = new List<Guid>() { Guid.Empty };
+            var result = Guid.Empty;
+            var results = new List<Guid>(){};
 
             foreach (var pos in possibleDialogsList) 
             {
-                var p = foundEntities.Where(x => x.IDRGDialog == pos).ToList();
+                var foundDialogs = foundEntities.Where(x => x.IDRGDialog == pos).ToList();
                 bool t = false;
 
-                if (p.Any())
+                if (foundDialogs.Any())
                 {
-                    t = p.Select(x => x.IDClient).ToList().SequenceEqual(li);
+                    t = foundDialogs.Select(x => x.IDClient).ToList().SequenceEqual(li);
                 }
                 if (t)
                 {
-                    result.Add(pos);
+                    results.Add(pos);
                 }
             }
-            if (result.Count>1)
+
+            if (results.Count == 1)
             {
-                result.Remove(Guid.Empty);
+                result = results[0];
             }
 
             return result;

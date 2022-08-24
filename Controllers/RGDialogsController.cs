@@ -36,7 +36,7 @@ namespace iMessengerCoreAPI.Controllers
             {
                 if (!li.ClientIds.Any())
                 {
-                    throw new BadHttpRequestException("Value is empty!");
+                    throw new BadHttpRequestException("Parameter value is empty!");
                 }
                 var result = _service.FindDialog(li.ClientIds);
 
@@ -57,11 +57,5 @@ namespace iMessengerCoreAPI.Controllers
                 return new ObjectResult(apiResult);
             }
         }
-    }
-
-    public class ApiResult
-    {
-        public int Code { get; set; }
-        public string Message { get; set; }
     }
 }
